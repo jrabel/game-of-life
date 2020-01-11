@@ -29,14 +29,72 @@ function setInitialBoardState(board) {
     }
 }
 
-function getRandomColor() {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
+function createBoardDeepCopy(board) {
+    var boardCopy = new Array(board.length);
+    for (var i = 0; i < boardCopy.length; i++) {
+        boardCopy[i] = board[i].slice();
     }
-    return color;
+    return boardCopy;
 }
+
+function getLivingNeighborCount(i, j, board) {
+    var livingNeighborCount = 0;
+    // NW
+    if (i > 0) {
+        if (j > 0)
+            livingNeighborCount += board[i - 1][j - 1];
+        // N
+        livingNeighborCount += board[i - 1][j];
+        // NE
+        if (j < (board[i].length - 1))
+            livingNeighborCount += board[i - 1][j + 1];
+    }
+
+    // W
+    if (j > 0)
+        livingNeighborCount += board[i][j - 1];
+    // E
+    if (j < (board[i].length - 1))
+        livingNeighborCount += board[i][j + 1];
+
+    if (i < (board.length - 1)) {
+        // SW
+        if (j > 0)
+            livingNeighborCount += board[i + 1][j - 1];
+        // S
+        livingNeighborCount += board[i + 1][j];
+        // SE
+        if (j < (board[i].length - 1))
+            livingNeighborCount += board[i + 1][j + 1];
+    }
+
+    return livingNeighborCount;
+}
+
+function updateBoard(board) {
+    var updatedBoard = createBoardDeepCopy(board);
+    for (var i = 0; i < board.length; i++) {
+        for (var j = 0; j < board[i].length; j++) {
+            var livingNeighborCount = getLivingNeighborCount(i, j, board);
+            if (board[i][j]) {
+                if (!((livingNeighborCount == 2) || (livingNeighborCount == 3))) updatedBoard[i][j] = 0;
+            }
+            else {
+                if (livingNeighborCount == 3) updatedBoard[i][j] = 1;
+            }
+        }
+    }
+    return updatedBoard;
+}
+
+// function getRandomColor() {
+//     var letters = '0123456789ABCDEF';
+//     var color = '#';
+//     for (var i = 0; i < 6; i++) {
+//         color += letters[Math.floor(Math.random() * 16)];
+//     }
+//     return color;
+// }
 
 function drawBoard(board) {
     for (var i = 0; i < board.length; i++) {
@@ -59,6 +117,7 @@ function drawBoard(board) {
 
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    mainBoard = updateBoard(mainBoard);
     drawBoard(mainBoard);
     console.log(mainBoard);
 }
