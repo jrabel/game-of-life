@@ -2,33 +2,47 @@
 <html>
 
 <head>
-    <meta charset="utf-8" />
+
     <title>Game of Life</title>
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-        }
 
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
+    <meta charset="UTF-8" />
 
-        canvas {
-            background: #eee;
-            display: block;
-            margin: 0 auto;
-        }
-    </style>
+    <!-- STYLE -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="styles/conway.css" rel="stylesheet" type="text/css">
+
+    <!-- FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
 
 </head>
 
 <body>
 
-    <canvas id="myCanvas"></canvas>
+    <div class="row h-100">
+
+        <div id="sidebar" class="col-md-2">
+            <h1>Conway's Game of Life</h1>
+            <p>
+                The Game of Life simulates the evolution of a grid of square cells based on an initial state. After each
+                generation (or update) a cell is either alive or dead based on its previous state and the state of its
+                neighbors.
+            </p>
+
+            <div class="row justify-content-center">
+                <button id="playButton" onclick="playButtonClicked()">Play</button>
+                <button id="playButton" onclick="pauseButtonClicked()">Pause</button>
+            </div>
+
+        </div>
+
+        <div id="boardCanvas" class="col-md-10">
+            <canvas id="myCanvas"></canvas>
+        </div>
+    </div>
+
+
     <script src="js/game_of_life.js"></script>
 
 </body>

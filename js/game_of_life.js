@@ -1,8 +1,8 @@
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-canvas.width = document.body.clientWidth;
-canvas.height = document.body.clientHeight;
+canvas.width = document.getElementById("boardCanvas").clientWidth;
+canvas.height = document.getElementById("boardCanvas").clientHeight;
 
 const cellDim = 10;
 
@@ -11,6 +11,8 @@ const jCellCount = Math.floor(canvas.height / cellDim);
 
 var mainBoard = initEmptyBoard();
 setInitialBoardState(mainBoard);
+
+var playing = true;
 
 function initEmptyBoard() {
     var board = new Array(iCellCount);
@@ -116,10 +118,19 @@ function drawBoard(board) {
 }
 
 function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    mainBoard = updateBoard(mainBoard);
-    drawBoard(mainBoard);
-    console.log(mainBoard);
+    if (playing) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        mainBoard = updateBoard(mainBoard);
+        drawBoard(mainBoard);
+    }
+}
+
+function playButtonClicked() {
+    playing = true;
+}
+
+function pauseButtonClicked() {
+    playing = false;
 }
 
 setInterval(draw, 100);
