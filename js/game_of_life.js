@@ -10,7 +10,7 @@ const iCellCount = Math.floor(canvas.width / cellDim);
 const jCellCount = Math.floor(canvas.height / cellDim);
 
 var mainBoard = initEmptyBoard();
-setInitialBoardState(mainBoard);
+randomizeBoardState(mainBoard);
 
 var playing = true;
 
@@ -22,10 +22,13 @@ function initEmptyBoard() {
     return board;
 }
 
-function setInitialBoardState(board) {
+function randomizeBoardState(board) {
+    var slider = document.getElementById("randomDensity");
+    var density = slider.value / 100;
+
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[i].length; j++) {
-            var randomState = Math.round(Math.random());
+            var randomState = Math.random() <= density;
             board[i][j] = randomState;
         }
     }
@@ -118,11 +121,10 @@ function drawBoard(board) {
 }
 
 function draw() {
-    if (playing) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (playing)
         mainBoard = updateBoard(mainBoard);
-        drawBoard(mainBoard);
-    }
+    drawBoard(mainBoard);
 }
 
 function playButtonClicked() {
@@ -131,6 +133,11 @@ function playButtonClicked() {
 
 function pauseButtonClicked() {
     playing = false;
+}
+
+function randomizeStateButtonClicked() {
+    playing = false
+    randomizeBoardState(mainBoard);
 }
 
 setInterval(draw, 100);
