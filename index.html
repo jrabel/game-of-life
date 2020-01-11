@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Game of Life</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        canvas {
+            background: #eee;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="myCanvas"></canvas>
+
+    <script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        canvas.width = document.body.clientWidth;
+        canvas.height = document.body.clientHeight;
+
+        var cellDim = 10;
+
+        console.log(canvas.width);
+        console.log(canvas.height);
+
+        var iCellCount = Math.floor(canvas.width / cellDim);
+        var jCellCount = Math.floor(canvas.height / cellDim);
+
+        // init board
+        var board = new Array(iCellCount);
+        for (var i = 0; i < board.length; i++) {
+            board[i] = new Array(jCellCount).fill(0);
+        }
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function drawBoard() {
+
+            for (var i = 0; i < board.length; i++) {
+                for (var j = 0; j < board[i].length; j++) {
+                    var x = i * cellDim;
+                    var y = j * cellDim;
+                    ctx.beginPath();
+                    ctx.rect(x, y, cellDim, cellDim);
+                    ctx.fillStyle = getRandomColor();
+                    ctx.fill();
+                    ctx.closePath();
+                }
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBoard();
+        }
+
+        setInterval(draw, 100);
+    </script>
+
+</body>
+
+</html>
