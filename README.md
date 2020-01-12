@@ -2,4 +2,4 @@
 
 Created using JavaScript and rendered on HTML5 `<canvas>`
 
-![Example Interface](/images/example_interface.png)
+![Example Interface](/images/example_interface.PNG)
