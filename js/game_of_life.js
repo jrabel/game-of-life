@@ -1,13 +1,19 @@
 var canvas = document.getElementById("myCanvas");
+var cellSizeInput = document.getElementById("cellSizeInput");
+var boardWidthInput = document.getElementById("boardWidthInput");
+var boardHeightInput = document.getElementById("boardHeightInput");
+
 var ctx = canvas.getContext("2d");
 
 canvas.width = document.getElementById("boardCanvas").clientWidth;
 canvas.height = document.getElementById("boardCanvas").clientHeight;
 
-const cellDim = 10;
+var cellDim = 10;
 
-const iCellCount = Math.floor(canvas.width / cellDim);
-const jCellCount = Math.floor(canvas.height / cellDim);
+cellSizeInput.value = cellDim;
+boardWidthInput.value = canvas.width;
+boardHeightInput.value = canvas.height;
+
 
 var mainBoard = initEmptyBoard();
 randomizeBoardState(mainBoard);
@@ -17,6 +23,8 @@ var drawing = false;
 var erasing = false;
 
 function initEmptyBoard() {
+    var iCellCount = Math.floor(canvas.width / cellDim);
+    var jCellCount = Math.floor(canvas.height / cellDim);
     var board = new Array(iCellCount);
     for (var i = 0; i < board.length; i++) {
         board[i] = new Array(jCellCount).fill(0);
@@ -148,8 +156,19 @@ function pauseButtonClicked() {
     playing = false;
 }
 
+function generateButtonClicked() {
+    playing = false;
+    cellDim = cellSizeInput.value;
+    canvas.width = boardWidthInput.value;
+    canvas.height = boardHeightInput.value;
+    mainBoard = initEmptyBoard();
+    randomizeBoardState(mainBoard);
+}
+
 function randomizeStateButtonClicked() {
     playing = false;
+    drawing = false;
+    erasing = false;
     randomizeBoardState(mainBoard);
 }
 

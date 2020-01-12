@@ -25,17 +25,42 @@
         <div id="sidebar" class="col-md-2">
             <h1>Conway's Game of Life</h1>
             <p style="margin-bottom: 20px;">
-                The <b>Game of Life</b> simulates the evolution of a grid of square cells based on an initial
-                state. After each
-                generation (or update) a cell is either alive or dead based on its previous state and the state of its
-                neighbors.
+                For a description of the game click
+                <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">here</a>.
             </p>
 
-            <h2>Controls:</h2>
 
             <div class="row justify-content-center">
                 <button class="controlButton greenButton" onclick="playButtonClicked()">Play</button>
                 <button class="controlButton yellowButton" onclick="pauseButtonClicked()">Pause</button>
+            </div>
+
+            <h2>Grid Setup:</h2>
+            <div id="controlPanel" class="row justify-content-center">
+                <div class="row justify-content-center">
+                    <div class="col-8" style="margin: 5px 0;">
+                        <p>Cell Size (px):</p>
+                    </div>
+                    <div class="col-4" style="margin: 5px 0;">
+                        <input style="width: 90%;" type="number" id="cellSizeInput">
+                    </div>
+
+                    <div class="col-8" style="margin: 5px 0;">
+                        <p>Grid Width (px):</p>
+                    </div>
+                    <div class="col-4" style="margin: 5px 0;">
+                        <input style="width: 90%;" type="number" id="boardWidthInput">
+                    </div>
+
+                    <div class="col-8" style="margin: 5px 0;">
+                        <p>Grid Height (px):</p>
+                    </div>
+                    <div class="col-4" style="margin: 5px 0;">
+                        <input style="width: 90%;" type="number" id="boardHeightInput">
+                    </div>
+
+                    <button class="controlButtonSmall blackButton" onclick="generateButtonClicked()">Generate</button>
+                </div>
             </div>
 
             <h2 style="width: 100%;">Randomize Initial State:</h2>
@@ -47,16 +72,17 @@
                     <input type="range" min="1" max="100" value="50" class="slider" id="randomDensity">
                 </div>
 
-                <button class="controlButton blackButton" onclick="randomizeStateButtonClicked()">Randomize</button>
+                <button class="controlButtonSmall blackButton"
+                    onclick="randomizeStateButtonClicked()">Randomize</button>
 
             </div>
 
             <h2 style="width: 100%;">Draw Initial State:</h2>
             <div id="controlPanel" class="row justify-content-center">
 
-                <button class="controlButton blackButton" onclick="drawButtonClicked()">Draw</button>
-                <button class="controlButton blackButton" onclick="eraseButtonClicked()">Erase</button>
-                <button class="controlButton blackButton" onclick="clearButtonClicked()">Clear</button>
+                <button class="controlButtonSmall greenButton" onclick="drawButtonClicked()">Draw</button>
+                <button class="controlButtonSmall redButton" onclick="eraseButtonClicked()">Erase</button>
+                <button class="controlButtonSmall blueButton" onclick="clearButtonClicked()">Clear</button>
 
             </div>
 
