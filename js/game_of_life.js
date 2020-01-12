@@ -13,6 +13,8 @@ var mainBoard = initEmptyBoard();
 randomizeBoardState(mainBoard);
 
 var playing = true;
+var drawing = false;
+var erasing = false;
 
 function initEmptyBoard() {
     var board = new Array(iCellCount);
@@ -92,16 +94,7 @@ function updateBoard(board) {
     return updatedBoard;
 }
 
-// function getRandomColor() {
-//     var letters = '0123456789ABCDEF';
-//     var color = '#';
-//     for (var i = 0; i < 6; i++) {
-//         color += letters[Math.floor(Math.random() * 16)];
-//     }
-//     return color;
-// }
-
-function drawBoard(board) {
+function renderBoard(board) {
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[i].length; j++) {
             var x = i * cellDim;
@@ -120,15 +113,35 @@ function drawBoard(board) {
     }
 }
 
-function draw() {
+function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (playing)
         mainBoard = updateBoard(mainBoard);
-    drawBoard(mainBoard);
+
+    renderBoard(mainBoard);
+
+    if (drawing || erasing) {
+        var cellX = Math.floor(hoverPositionX / cellDim);
+        var cellY = Math.floor(hoverPositionY / cellDim);
+        var x = cellX * cellDim;
+        var y = cellY * cellDim;
+        console.log("x: " + x);
+        console.log("y: " + y);
+        ctx.beginPath();
+        ctx.rect(x, y, cellDim, cellDim);
+        if (drawing)
+            ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
+        if (erasing)
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+        ctx.fill();
+        ctx.closePath();
+    }
 }
 
 function playButtonClicked() {
     playing = true;
+    drawing = false;
+    erasing = false;
 }
 
 function pauseButtonClicked() {
@@ -136,8 +149,50 @@ function pauseButtonClicked() {
 }
 
 function randomizeStateButtonClicked() {
-    playing = false
+    playing = false;
     randomizeBoardState(mainBoard);
 }
 
-setInterval(draw, 100);
+function drawButtonClicked() {
+    playing = false;
+    drawing = true;
+    erasing = false;
+}
+
+function eraseButtonClicked() {
+    playing = false;
+    drawing = false;
+    erasing = true;
+}
+
+function clearButtonClicked() {
+    playing = false;
+    drawing = false;
+    erasing = false;
+    mainBoard = initEmptyBoard();
+}
+
+var box = document.querySelector(".box");
+
+var hoverPositionX;
+var hoverPositionY;
+
+function updateDisplay(event) {
+    console.log(event);
+    hoverPositionX = event.offsetX;
+    hoverPositionY = event.offsetY;
+
+    var cellX = Math.floor(hoverPositionX / cellDim);
+    var cellY = Math.floor(hoverPositionY / cellDim);
+
+    if (drawing && event.buttons)
+        mainBoard[cellX][cellY] = 1;
+
+    if (erasing && event.buttons)
+        mainBoard[cellX][cellY] = 0;
+}
+
+canvas.addEventListener("mousemove", updateDisplay, false);
+canvas.addEventListener("mousedown", updateDisplay, false);
+
+setInterval(render, 100);

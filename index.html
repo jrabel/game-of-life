@@ -24,7 +24,7 @@
 
         <div id="sidebar" class="col-md-2">
             <h1>Conway's Game of Life</h1>
-            <p>
+            <p style="margin-bottom: 20px;">
                 The <b>Game of Life</b> simulates the evolution of a grid of square cells based on an initial
                 state. After each
                 generation (or update) a cell is either alive or dead based on its previous state and the state of its
@@ -39,7 +39,6 @@
             </div>
 
             <h2 style="width: 100%;">Randomize Initial State:</h2>
-
             <div id="controlPanel" class="row justify-content-center">
 
                 <p style="width: 100%; text-align: center;">Density</p>
@@ -49,6 +48,15 @@
                 </div>
 
                 <button class="controlButton blackButton" onclick="randomizeStateButtonClicked()">Randomize</button>
+
+            </div>
+
+            <h2 style="width: 100%;">Draw Initial State:</h2>
+            <div id="controlPanel" class="row justify-content-center">
+
+                <button class="controlButton blackButton" onclick="drawButtonClicked()">Draw</button>
+                <button class="controlButton blackButton" onclick="eraseButtonClicked()">Erase</button>
+                <button class="controlButton blackButton" onclick="clearButtonClicked()">Clear</button>
 
             </div>
 
